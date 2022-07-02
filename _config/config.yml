@@ -1,0 +1,23 @@
+---
+Name: tauri-update-server
+---
+
+SilverStripe\Assets\File:
+  allowed_extensions:
+    - deb
+    - rpm
+    - exe
+    - dmg
+
+SilverStripe\MimeValidator\MimeUploadValidator:
+  MimeTypes:
+    rpm:
+      - 'application/octet-stream'
+      - 'application\/x-rpm'
+    #exe:
+    #  - 'application/octet-stream'
+    dmg:
+      - 'application/octet-stream'
+      - 'application\/x-dmg'
+      - 'application/x-apple-diskimage'
+      - 'application/x-newton-compatible-pkg'

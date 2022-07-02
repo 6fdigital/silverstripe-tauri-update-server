@@ -1,0 +1,9 @@
+---
+Name: tauri-update-server-routes
+After:
+  - '#rootroutes'
+  - '#coreroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'update/$Application/$Target/$CurrentVersion': "SixF\\TUS\\Controller\\TauriUpdateServer"
