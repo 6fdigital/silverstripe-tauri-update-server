@@ -1,0 +1,26 @@
+{
+    "name": "6fdigital/silverstripe-tauri-update-server",
+    "description": "A module turning silverstripe in a update server for tauri apps",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe",
+        "cms",
+        "tauri",
+        "rust"
+    ],
+    "license": "MIT",
+    "require": {
+        "silverstripe/cms": ">4",
+        "composer/semver": "3.3.2"
+    },
+    "authors": [{
+        "name": "Marco Kernler",
+        "email": "marco.kernler@6f.digital"
+    }],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "SixF\\TUS\\": "code"
+        }
+    }
+}
