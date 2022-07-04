@@ -10,6 +10,7 @@
     ],
     "license": "MIT",
     "require": {
+        "ext-json": "*",
         "silverstripe/cms": ">4",
         "composer/semver": "3.3.2"
     },
