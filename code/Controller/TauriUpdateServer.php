@@ -39,22 +39,4 @@ class TauriUpdateServer extends Controller
 
         return $artifact->getJson();
     }
-
-    protected function shouldUpdate($currentVersion, $app): boolean {
-        // Comparator::greaterThan()
-        return false;
-    }
-
-
-    protected function getJson(): string {
-        $data = [
-            "url" => "some-url",
-            "v"
-        ];
-
-        return json_encode($data);
-    }
-
-
-
 }
