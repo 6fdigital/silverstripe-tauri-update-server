@@ -34,7 +34,7 @@ class TauriUpdateServer extends Controller
         }
 
         //
-        $this->getResponse()->addHeader("ContentType", "application/json");
+        $this->getResponse()->addHeader("Content-Type", "application/json");
         $this->getResponse()->setStatusCode("200", "OK");
 
         return $artifact->getJson();
