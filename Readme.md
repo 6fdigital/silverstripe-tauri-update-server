@@ -1,4 +1,5 @@
 # Silverstripe Tauri Update Server
+A module turning silverstripe in a update server for tauri apps
 
 # Requirements
 SilverStripe 4+
