@@ -1,0 +1,37 @@
+de:
+  SixF\TUS\Admin\TusModelAdmin:
+    MENUTITLE: 'Update Server'
+
+  SixF\TUS\Model\Application:
+    SINGULARNAME: 'Anwendung'
+    PLURALNAME: 'Anwendungen'
+    PLURALS:
+      one: 'Eine Anwendung'
+      other: '{count} Anwendungen'
+    db_Title: 'Titel'
+    has_many_Releases: 'Releases'
+
+
+  SixF\TUS\Model\Artifact:
+    SINGULARNAME: 'Artifakt'
+    PLURALNAME: 'Artifakte'
+    PLURALS:
+      one: 'Ein Artifakt'
+      other: '{count} Artifakte'
+    db_Os: 'Betriebsystem'
+    has_one_File: 'Datei'
+    has_one_Release: 'Release'
+
+
+  SixF\TUS\Model\Release:
+    SINGULARNAME: 'Release'
+    PLURALNAME: 'Releases'
+    PLURALS:
+      one: 'Ein Release'
+      other: '{count} Releases'
+    db_Version: 'Version'
+    db_Notes: 'Versionshinweise'
+    db_Signature: 'Signatur'
+    has_one_Application: 'Anwendung'
+    has_many_Artifacts: 'Artifakte'
+
