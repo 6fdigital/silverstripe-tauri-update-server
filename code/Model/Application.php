@@ -9,37 +9,45 @@ use SilverStripe\ORM\DataObject;
 
 class Application extends DataObject
 {
-    private static $singular_name = "Anwendung";
+  private static $table_name = "Application";
 
-    private static $plural_name = "Anwendungen";
+  private static $db = [
+    "Title" => "Varchar(100)",
+  ];
 
-    private static $table_name = "Application";
+  private static $has_many = [
+    "Releases" => Release::class,
+  ];
 
-    private static $db = [
-        "Title" => "Varchar(100)",
-    ];
+  /**
+   * @return Release|null
+   */
+  public function latestRelease(): ?Release
+  {
+    return $this->Releases()->sort("Version", "ASC")->last();
+  }
 
-    private static $has_many = [
-        "Releases" => Release::class,
-    ];
+  /**
+   * @param $currentVersion
+   * @return bool
+   */
+  public function canUpdate($currentVersion): bool
+  {
+    //
+    $latestRelease = $this->latestRelease();
 
-    private static $field_labels = [];
+    return Comparator::greaterThan($latestRelease->Version, $currentVersion);
+  }
 
-    public function latestRelease(): Release {
-        return $this->Releases()->sort("Version", "ASC")->last();
-    }
+  /**
+   * @param $os
+   * @return Artifact|null
+   */
+  public function getArtifact($os): ?Artifact
+  {
+    //
+    $latestRelease = $this->latestRelease();
 
-    public function canUpdate($currentVersion): bool {
-        //
-        $latestRelease = $this->latestRelease();
-
-        return Comparator::greaterThan($latestRelease->Version, $currentVersion);
-    }
-
-    public function getArtifact($os): ?Artifact {
-        //
-        $latestRelease = $this->latestRelease();
-
-        return $latestRelease->Artifacts()->filter(["Os" => $os])->first();
-    }
+    return $latestRelease->Artifacts()->filter(["Os" => $os])->first();
+  }
 }
