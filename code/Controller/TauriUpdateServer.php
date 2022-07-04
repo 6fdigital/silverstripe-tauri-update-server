@@ -10,6 +10,9 @@ use SixF\TUS\Model\Application;
 
 class TauriUpdateServer extends Controller
 {
+  /**
+   * @return void
+   */
   public function index()
   {
     //

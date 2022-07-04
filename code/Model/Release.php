@@ -26,19 +26,17 @@ class Release extends DataObject
     "Title",
   ];
 
-  private static $field_labels = [
-    "Title" => "Titel",
-    "Version" => "Version",
-    "VersionNice" => "Version",
-    "Application" => "Anwendung",
-    "Artifacts" => "Artifakte",
-  ];
-
+  /**
+   * @return string
+   */
   public function Title()
   {
     return sprintf("%s %s", $this->Application()->Title, $this->VersionNice());
   }
 
+  /**
+   * @return string
+   */
   public function VersionNice()
   {
     return sprintf("v%s", $this->Version);

@@ -9,10 +9,6 @@ use SilverStripe\ORM\DataObject;
 
 class Application extends DataObject
 {
-  private static $singular_name = "Anwendung";
-
-  private static $plural_name = "Anwendungen";
-
   private static $table_name = "Application";
 
   private static $db = [
@@ -23,13 +19,18 @@ class Application extends DataObject
     "Releases" => Release::class,
   ];
 
-  private static $field_labels = [];
-
+  /**
+   * @return Release|null
+   */
   public function latestRelease(): ?Release
   {
     return $this->Releases()->sort("Version", "ASC")->last();
   }
 
+  /**
+   * @param $currentVersion
+   * @return bool
+   */
   public function canUpdate($currentVersion): bool
   {
     //
@@ -38,6 +39,10 @@ class Application extends DataObject
     return Comparator::greaterThan($latestRelease->Version, $currentVersion);
   }
 
+  /**
+   * @param $os
+   * @return Artifact|null
+   */
   public function getArtifact($os): ?Artifact
   {
     //

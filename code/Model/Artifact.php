@@ -7,10 +7,6 @@ use SilverStripe\ORM\DataObject;
 
 class Artifact extends DataObject
 {
-  private static $singular_name = "Artifact";
-
-  private static $plural_name = "Artifacts";
-
   private static $table_name = "Artifact";
 
   private static $db = [
@@ -27,9 +23,12 @@ class Artifact extends DataObject
   ];
 
   private static $summary_fields = [
-    "Os" => "OS",
+    "Os",
   ];
 
+  /**
+   * @return false|string
+   */
   public function getJson()
   {
     return json_encode([
