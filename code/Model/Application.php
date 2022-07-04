@@ -25,7 +25,7 @@ class Application extends DataObject
 
     private static $field_labels = [];
 
-    public function latestRelease(): Release {
+    public function latestRelease(): ?Release {
         return $this->Releases()->sort("Version", "ASC")->last();
     }
 
