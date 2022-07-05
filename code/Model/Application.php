@@ -24,7 +24,7 @@ class Application extends DataObject
    */
   public function latestRelease(): ?Release
   {
-    return $this->Releases()->sort("Version", "ASC")->last();
+    return $this->Releases()->sort("Version", "DESC")->first();
   }
 
   /**
