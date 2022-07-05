@@ -3,21 +3,28 @@
 namespace SixF\TUS\Model;
 
 use SilverStripe\Assets\File;
+use SilverStripe\Dev\Debug;
+use SilverStripe\Forms\DropdownField;
 use SilverStripe\ORM\DataObject;
 
 class Artifact extends DataObject
 {
   private static $table_name = "Artifact";
 
+  private static $oss = ["linux", "darwin", "windows"];
+
+  private static $archs = ["x86_64", "aarch64", "i686", "armv7"];
+
   private static $db = [
-    "Os" => "Enum('linux,darwin,windows', 'linux')",
-    // "Arch" => "Enum('x86_64,aarch64,i686,armv7','x86_64')",
+    "Os" => "Varchar(255)",
+    "Arch" => "Varchar(255)",
   ];
 
   private static $has_one = [
     "File" => File::class,
     "Release" => Release::class,
   ];
+
   private static $owns = [
     "File",
   ];
@@ -27,6 +34,63 @@ class Artifact extends DataObject
   ];
 
   /**
+   * Returns
+   * @param string $optionName
+   * @return array
+   */
+  private static function config_option_array(string $optionName): array
+  {
+    //
+    if (!$config = Artifact::config()->get($optionName)) {
+      return [];
+    }
+
+    //
+    $res = [];
+    foreach ($config as $value) {
+      $res[$value] = $value;
+    }
+
+    return $res;
+  }
+
+  /**
+   * @return \SilverStripe\Forms\FieldList
+   */
+  public function getCMSFields()
+  {
+    $f = parent::getCMSFields();
+
+    //
+    $f->removeByName("ReleaseID");
+
+    // create os drop-down
+    $f->addFieldToTab(
+      "Root.Main",
+      DropdownField::create(
+        "Os",
+        _t("SixF\TUS\Model\Artifact.db_Os", "Operating System"),
+        self::config_option_array("oss")
+      ),
+      "File"
+      );
+
+    // create arch drop-down
+    $f->addFieldToTab(
+      "Root.Main",
+      DropdownField::create(
+        "Arch",
+        _t("SixF\TUS\Model\Artifact.db_Arch", "Architecture"),
+        self::config_option_array("archs")
+      ),
+      "File"
+      );
+
+    return $f;
+  }
+
+  /**
+   * Return the json for the updater for updating
    * @return false|string
    */
   public function getJson()

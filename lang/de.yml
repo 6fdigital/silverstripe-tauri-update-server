@@ -19,6 +19,7 @@ de:
       one: 'Ein Artifakt'
       other: '{count} Artifakte'
     db_Os: 'Betriebsystem'
+    db_Arch: 'Architektur'
     has_one_File: 'Datei'
     has_one_Release: 'Release'
 
