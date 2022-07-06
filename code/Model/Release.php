@@ -27,6 +27,20 @@ class Release extends DataObject
   ];
 
   /**
+   * @return void
+   */
+  public function onBeforeDelete()
+  {
+    parent::onBeforeDelete();
+
+    if ($this->Artifacts()->Count() <= 0) return;
+
+    foreach ($this->Artifacts() as $artifact) {
+      $artifact->delete();
+    }
+  }
+
+  /**
    * @return string
    */
   public function Title()

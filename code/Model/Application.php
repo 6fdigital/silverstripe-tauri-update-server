@@ -24,7 +24,7 @@ class Application extends DataObject
    */
   public function latestRelease(): ?Release
   {
-    return $this->Releases()->sort("Version", "ASC")->last();
+    return $this->Releases()->sort("Version", "DESC")->first();
   }
 
   /**
@@ -43,11 +43,11 @@ class Application extends DataObject
    * @param $os
    * @return Artifact|null
    */
-  public function getArtifact($os): ?Artifact
+  public function getArtifact(string $os, string $arch): ?Artifact
   {
     //
     $latestRelease = $this->latestRelease();
 
-    return $latestRelease->Artifacts()->filter(["Os" => $os])->first();
+    return $latestRelease->Artifacts()->filter(["Os" => $os, "Arch" => $arch])->first();
   }
 }
