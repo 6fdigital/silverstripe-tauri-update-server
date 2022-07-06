@@ -19,6 +19,7 @@ en:
       one: 'a Artifact'
       other: '{count} Artifacts'
     db_Os: 'Operating System'
+    db_Arch: 'Architecture'
     has_one_File: 'File'
     has_one_Release: 'Release'
 
