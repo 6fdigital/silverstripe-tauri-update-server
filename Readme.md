@@ -1,60 +1,98 @@
 # Silverstripe Tauri Update Server
-A module turning silverstripe in a update server for tauri apps
+
+A module turning silverstripe into a update server for tauri apps
 
 # Requirements
+
 SilverStripe 4+
 
 ## Installation Instructions
 
 ### Composer
+
 1. ```composer require 6fdigital/silverstripe-tauri-update-server```
 2. Visit http://yoursite.com/dev/build?flush=1 to rebuild the database.
 
 ### Manual
+
 1. Place this directory in the root of your SilverStripe installation, rename
    the folder to `update-server`.
 2. Visit http://yoursite.com/dev/build?flush=1 to rebuild the database.
 
 ## Concepts
-The module allows to provide a tauri-update-server capable of managing whether
-new versions for a tauri-app are available or not. You simply create an
-application within the SilverStripe CMS to provide further details about
-releases and artifacts related to your app(s).
 
-When a tauri-app requests a check about whether an update is available or not,
-it'll pass the `{{target}}` and `{{current_version}}` via the called url.
+Tauri apps coming shipped with a updater included. This requires a server responding
+to the request of a tauri updater. The general documentation could be
+found [here](https://tauri.app/v1/guides/distribution/updater).
 
-### Application
-A application DataObject are the starting point for providing an update-server
-here you can manage your different versions of your application.
+This module will handle requests from your tauri-app(s) by serving some json, which
+allows the tauri updater to determine whether an update are available or not. Just
+add the url of your silverstripe installation as the endpoint within the tauri config.
 
-### Release
-Via a release you're able to manage the new version's (major, minor, patch) of
-your app. ALso, you're able to provide some notes for all of the releases.
+The module allows to manage multiple applications with different releases and artifacts.
+Simply go to the `Update Server` section within the CMS and add your information.
 
-### Artifact
-With the Artifact you're able to provide os-related files for the Releases of
-your app.
+### Checking for updates
 
-### Semver Version Checks
+Add the url of you're silverstripe-installation to the endpoint section within the
+tauri config:
+
+```json
+{
+  "updater": {
+    "active": true,
+    "endpoints": [
+      "https://some.tld/update/<app-name>/{{target}}-{{arch}}/{{current_version}}"
+    ]
+  }
+}
+```
+This will return with some json data and status code 200 if a new version are available 
+or with status-code 204 if not.
+
+#### Semver Version Checks
+
 To check whether an app has updates, we'll use the `composer/semver` package.
 For more information see [here](https://getcomposer.org/doc/articles/versions.md#versions-and-constraints).
 
+### Creating a new release
+The module also supports creating a new release via a HTTP POST request. To create a
+new release you need the following information:
+* **Token** - If enabled on the application, you must serve a token with your request
+* **Release Manifest** - See below for more information
+
+#### Release Manifest
+To release a new version of an application, you MUST create a release manifest and send
+it with your request to the endpoint. Also, you must specify at least one artifact you
+want to publish with your release.
+```json
+{
+   "version":"<release-version>",
+   "notes":"<release-notes>",
+   "signature":"<tauri-artifact-signature>",
+   "application":"<application-name>",
+   "artifacts":[
+      {
+         "os":"<os (linux | darwin | windows)>",
+         "arch":"arch (x86_64 | aarch64 | i686 | armv7)",
+         "field":"<field-name>"
+      }
+   ]
+}
+```
+For the request to function, you must create a `form-data` request and add your files under
+the field names for each artifact (field), a `MANIFEST` field serving the above json as well as
+a `TOKEN` field. The endpoint for adding new releases are available under `https://your.tld/release/add`.
+More information about signing your builds could be found below under **Code Signing**.
+
+
 ## Code Signing
+
 Each artifact must contain a valid signature defined by tauri during the app
 builds.
 Therefore, you MUST [create a pub/private-key](https://tauri.app/v1/guides/distribution/updater#signing-updates)
 to sign your artifacts.
 
-The signature for the new build artifacts are then outputted to the file
-mentioned on the last line of a `npm run tauri build`. See the
-`<app-name>.app.tar.gz.sig` path.
-
-```bash
-Password: 
-<empty>
-Deriving a key from the password and decrypting the secret key... done
-        Info 1 updater archive at:
-        Info         <absolute-project-path>/src-tauri/target/release/bundle/macos/tauri-app.app.tar.gz.sig
-```
+The signature for each release could be found in the appropriate `*.tar.gz.sig` file within each
+single build target in the `target` folder your tauri-app. See Code Signing for more information. 
 
