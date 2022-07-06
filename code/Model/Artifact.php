@@ -24,13 +24,13 @@ class Artifact extends DataObject
     "File" => File::class,
     "Release" => Release::class,
   ];
-
   private static $owns = [
     "File",
   ];
 
   private static $summary_fields = [
     "Os",
+    "Arch"
   ];
 
   /**
@@ -38,8 +38,7 @@ class Artifact extends DataObject
    * @param string $optionName
    * @return array
    */
-  private static function config_option_array(string $optionName): array
-  {
+  private static function config_option_array(string $optionName): array {
     //
     if (!$config = Artifact::config()->get($optionName)) {
       return [];
@@ -72,8 +71,8 @@ class Artifact extends DataObject
         _t("SixF\TUS\Model\Artifact.db_Os", "Operating System"),
         self::config_option_array("oss")
       ),
-      "File"
-      );
+      "File",
+    );
 
     // create arch drop-down
     $f->addFieldToTab(
@@ -83,8 +82,8 @@ class Artifact extends DataObject
         _t("SixF\TUS\Model\Artifact.db_Arch", "Architecture"),
         self::config_option_array("archs")
       ),
-      "File"
-      );
+      "File",
+    );
 
     return $f;
   }
