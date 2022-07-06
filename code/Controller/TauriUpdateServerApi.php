@@ -46,7 +46,9 @@ class TauriUpdateServerApi extends Controller
     $request = $this->getRequest();
     $response = $this->getResponse();
     $manifestData = $this->getRequest()->postVar("MANIFEST");
+    $token = $this->getRequest()->postVar("TOKEN");
 
+    //
     if (!$manifestData) {
       $response->setStatusCode(400);
       return;
@@ -103,6 +105,11 @@ class TauriUpdateServerApi extends Controller
     //
     if (!$application = Application::get()->filter(["Title" => $manifest->getApplication()])->first()) {
       return $this->_respond("Could not find application!", 400);
+    }
+
+    //
+    if (!$application->canCreateRelease($token)) {
+      return $this->_respond("You're not allowed to create releases!", 405);
     }
 
     //
