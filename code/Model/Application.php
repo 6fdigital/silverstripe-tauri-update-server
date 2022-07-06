@@ -17,6 +17,7 @@ class Application extends DataObject
 
   private static $has_many = [
     "Releases" => Release::class,
+    "Tokens" => Token::class,
   ];
 
   /**
@@ -49,5 +50,29 @@ class Application extends DataObject
     $latestRelease = $this->latestRelease();
 
     return $latestRelease->Artifacts()->filter(["Os" => $os, "Arch" => $arch])->first();
+  }
+
+  /**
+   * @param string|null $token
+   * @return bool
+   */
+  public function canCreateRelease(?string $token): bool
+  {
+    // no token required
+    if ($this->Tokens()->Count() === 0) return true;
+    // token required but no token given
+    if ($this->Tokens()->Count() > 0 && !$token) return false;
+
+    // check if a token exists
+    $res = false;
+    foreach ($this->Tokens() as $t) {
+      //
+      if ($t->Value === $token) {
+        $res = true;
+        break;
+      }
+    }
+
+    return $res;
   }
 }

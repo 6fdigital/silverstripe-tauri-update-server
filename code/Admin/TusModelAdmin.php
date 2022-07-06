@@ -5,6 +5,7 @@ namespace SixF\TUS\Admin;
 
 use SilverStripe\Admin\ModelAdmin;
 use SixF\TUS\Model\Application;
+use SixF\TUS\Model\Token;
 
 class TusModelAdmin extends ModelAdmin
 {
@@ -13,6 +14,7 @@ class TusModelAdmin extends ModelAdmin
    */
   private static $managed_models = [
     Application::class,
+    Token::class,
   ];
 
   /**
