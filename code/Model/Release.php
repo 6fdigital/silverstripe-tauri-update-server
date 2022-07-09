@@ -11,7 +11,6 @@ class Release extends DataObject
   private static $db = [
     "Version" => "Varchar(50)",
     "Notes" => "Text",
-    "Signature" => "Text",
   ];
 
   private static $has_one = [

@@ -18,12 +18,14 @@ class Artifact extends DataObject
   private static $db = [
     "Os" => "Varchar(255)",
     "Arch" => "Varchar(255)",
+    "Signature" => "Text",
   ];
 
   private static $has_one = [
     "File" => File::class,
     "Release" => Release::class,
   ];
+
   private static $owns = [
     "File",
   ];
@@ -34,7 +36,8 @@ class Artifact extends DataObject
   ];
 
   /**
-   * Returns
+   * Returns an array for the values specified in
+   * the class option for the given name
    * @param string $optionName
    * @return array
    */
@@ -99,7 +102,7 @@ class Artifact extends DataObject
       "version" => $this->Release()->Version,
       "notes" => $this->Release()->Notes,
       "pub_date" => date("c", strtotime($this->Created)),
-      "signature" => $this->Release()->Signature,
+      "signature" => $this->Signature,
     ]);
   }
 }
