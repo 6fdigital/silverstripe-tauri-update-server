@@ -65,12 +65,12 @@ Here you can see an example release manifest:
 {
    "version":"<release-version>",
    "notes":"<release-notes>",
-   "signature":"<tauri-artifact-signature>",
    "application":"<application-name>",
    "artifacts":[
       {
          "os":"<os (linux | darwin | windows)>",
          "arch":"arch (x86_64 | aarch64 | i686 | armv7)",
+         "signature":"<tauri-artifact-signature>",
          "field":"<field-name>"
       }
    ]
@@ -89,6 +89,6 @@ builds.
 Therefore, you MUST [create a pub/private-key](https://tauri.app/v1/guides/distribution/updater#signing-updates)
 to sign your artifacts.
 
-The signature for each release could be found in the appropriate `*.tar.gz.sig` file within each
-single build target in the `target` folder your tauri-app. See Code Signing for more information. 
+The signature for each artifact could be found in the appropriate `*.tar.gz.sig` file within each
+single build target in the `target` folder of your tauri-app. 
 

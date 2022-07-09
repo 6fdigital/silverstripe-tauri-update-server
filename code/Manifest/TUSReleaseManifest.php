@@ -9,7 +9,6 @@ class TUSReleaseManifest
 {
   protected string $_version;
   protected string $_notes;
-  protected string $_signature;
   protected string $_application;
   protected array $_artifacts;
 
@@ -43,22 +42,6 @@ class TUSReleaseManifest
   public function setNotes(string $notes): void
   {
     $this->_notes = $notes;
-  }
-
-  /**
-   * @return string
-   */
-  public function getSignature(): string
-  {
-    return $this->_signature;
-  }
-
-  /**
-   * @param string $signature
-   */
-  public function setSignature(string $signature): void
-  {
-    $this->_signature = $signature;
   }
 
   /**
@@ -115,7 +98,6 @@ class TUSReleaseManifest
 
     // check if all requirements are met
     if (!property_exists($json, "version") ||
-      !property_exists($json, "signature") ||
       !property_exists($json, "application") ||
       !property_exists($json, "artifacts") ||
       count($json->artifacts) === 0) {
@@ -126,7 +108,6 @@ class TUSReleaseManifest
     // $manifest = new TUSReleaseManifest();
     $this->setVersion($json->version);
     $this->setNotes($json->notes);
-    $this->setSignature($json->signature);
     $this->setApplication($json->application);
 
     // add artifacts
@@ -173,7 +154,6 @@ class TUSReleaseManifest
     $release = new Release();
     $release->Version = $this->getVersion();
     $release->Notes = $this->getNotes();
-    $release->Signature = $this->getSignature();
     $release->ApplicationID = $application->ID;
 
     //

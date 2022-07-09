@@ -14,6 +14,7 @@ class TUSReleaseManifestArtifact
 {
   protected string $_os;
   protected string $_arch;
+  protected string $_signature;
   protected string $_field;
   protected File $_file;
 
@@ -47,6 +48,22 @@ class TUSReleaseManifestArtifact
   public function setArch(string $arch): void
   {
     $this->_arch = $arch;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSignature(): string
+  {
+    return $this->_signature;
+  }
+
+  /**
+   * @param string $signature
+   */
+  public function setSignature(string $signature): void
+  {
+    $this->_signature = $signature;
   }
 
   /**
@@ -90,6 +107,7 @@ class TUSReleaseManifestArtifact
     $a = new Artifact();
     $a->Os = $this->getOs();
     $a->Arch = $this->getArch();
+    $a->Signature = $this->getSignature();
     $a->FileID = $this->getFile()->ID;
 
     return $a;
@@ -136,6 +154,7 @@ class TUSReleaseManifestArtifact
     //
     if (!property_exists($json, "os") ||
       !property_exists($json, "arch") ||
+      !property_exists($json, "signature") ||
       !property_exists($json, "field")) {
       return null;
     }
@@ -143,6 +162,7 @@ class TUSReleaseManifestArtifact
     //
     $this->setOs($json->os);
     $this->setArch($json->arch);
+    $this->setSignature($json->signature);
     $this->setField($json->field);
 
     return $this;
