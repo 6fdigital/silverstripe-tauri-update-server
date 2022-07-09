@@ -10,10 +10,11 @@ use SilverStripe\Assets\Upload_Validator;
 use SilverStripe\Core\Config\Config;
 use SixF\TUS\Model\Artifact;
 
-class TUSReleaseManifestArtifact
+class ReleaseManifestArtifact
 {
   protected string $_os;
   protected string $_arch;
+  protected string $_signature;
   protected string $_field;
   protected File $_file;
 
@@ -47,6 +48,22 @@ class TUSReleaseManifestArtifact
   public function setArch(string $arch): void
   {
     $this->_arch = $arch;
+  }
+
+  /**
+   * @return string
+   */
+  public function getSignature(): string
+  {
+    return $this->_signature;
+  }
+
+  /**
+   * @param string $signature
+   */
+  public function setSignature(string $signature): void
+  {
+    $this->_signature = $signature;
   }
 
   /**
@@ -90,6 +107,7 @@ class TUSReleaseManifestArtifact
     $a = new Artifact();
     $a->Os = $this->getOs();
     $a->Arch = $this->getArch();
+    $a->Signature = $this->getSignature();
     $a->FileID = $this->getFile()->ID;
 
     return $a;
@@ -100,7 +118,7 @@ class TUSReleaseManifestArtifact
    * from the $_FILES array
    * @return mixed
    */
-  public function getUploadFile(): ?TUSUploadFile
+  public function getUploadFile(): ?UploadFile
   {
     // validate field
     if (!array_key_exists($this->getField(), $_FILES) || !$data = $_FILES[$this->getField()]) {
@@ -117,7 +135,7 @@ class TUSReleaseManifestArtifact
     }
 
     //
-    $file = new TUSUploadFile();
+    $file = new UploadFile();
     $file->setName($data["name"]);
     $file->setType($data["type"]);
     $file->setTmpName($data["tmp_name"]);
@@ -131,11 +149,12 @@ class TUSReleaseManifestArtifact
     return $file;
   }
 
-  public function parse(object $json): ?TUSReleaseManifestArtifact
+  public function parse(object $json): ?ReleaseManifestArtifact
   {
     //
     if (!property_exists($json, "os") ||
       !property_exists($json, "arch") ||
+      !property_exists($json, "signature") ||
       !property_exists($json, "field")) {
       return null;
     }
@@ -143,6 +162,7 @@ class TUSReleaseManifestArtifact
     //
     $this->setOs($json->os);
     $this->setArch($json->arch);
+    $this->setSignature($json->signature);
     $this->setField($json->field);
 
     return $this;
