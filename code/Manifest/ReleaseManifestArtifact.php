@@ -10,7 +10,7 @@ use SilverStripe\Assets\Upload_Validator;
 use SilverStripe\Core\Config\Config;
 use SixF\TUS\Model\Artifact;
 
-class TUSReleaseManifestArtifact
+class ReleaseManifestArtifact
 {
   protected string $_os;
   protected string $_arch;
@@ -118,7 +118,7 @@ class TUSReleaseManifestArtifact
    * from the $_FILES array
    * @return mixed
    */
-  public function getUploadFile(): ?TUSUploadFile
+  public function getUploadFile(): ?UploadFile
   {
     // validate field
     if (!array_key_exists($this->getField(), $_FILES) || !$data = $_FILES[$this->getField()]) {
@@ -135,7 +135,7 @@ class TUSReleaseManifestArtifact
     }
 
     //
-    $file = new TUSUploadFile();
+    $file = new UploadFile();
     $file->setName($data["name"]);
     $file->setType($data["type"]);
     $file->setTmpName($data["tmp_name"]);
@@ -149,7 +149,7 @@ class TUSReleaseManifestArtifact
     return $file;
   }
 
-  public function parse(object $json): ?TUSReleaseManifestArtifact
+  public function parse(object $json): ?ReleaseManifestArtifact
   {
     //
     if (!property_exists($json, "os") ||

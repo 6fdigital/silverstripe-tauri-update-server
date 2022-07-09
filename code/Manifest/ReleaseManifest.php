@@ -5,7 +5,7 @@ namespace SixF\TUS\Manifest;
 use SixF\TUS\Model\Application;
 use SixF\TUS\Model\Release;
 
-class TUSReleaseManifest
+class ReleaseManifest
 {
   protected string $_version;
   protected string $_notes;
@@ -77,10 +77,10 @@ class TUSReleaseManifest
   }
 
   /**
-   * @param TUSReleaseManifestArtifact $artifact
+   * @param ReleaseManifestArtifact $artifact
    * @return void
    */
-  public function addArtifact(TUSReleaseManifestArtifact $artifact): void
+  public function addArtifact(ReleaseManifestArtifact $artifact): void
   {
     $this->_artifacts[] = $artifact;
   }
@@ -89,7 +89,7 @@ class TUSReleaseManifest
    * @param string $data
    * @return $this|null
    */
-  public function parse(string $data): ?TUSReleaseManifest
+  public function parse(string $data): ?ReleaseManifest
   {
     // try parsing the raw post request data
     if (!$json = json_decode($data)) {
@@ -113,7 +113,7 @@ class TUSReleaseManifest
     // add artifacts
     foreach ($json->artifacts as $artifactObj) {
       //
-      $artifact = new TUSReleaseManifestArtifact();
+      $artifact = new ReleaseManifestArtifact();
 
       if (!$artifact->parse($artifactObj)) {
         continue;
