@@ -12,9 +12,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\Debug;
 use SilverStripe\Assets\File;
 use SixF\TUS\Model\Application;
-use SixF\TUS\Model\Artifact;
-use SixF\TUS\Model\Release;
-use SixF\TUS\Manifest\TUSReleaseManifest;
+use SixF\TUS\Manifest\ReleaseManifest;
 
 class TauriUpdateServerApi extends Controller
 {
@@ -71,7 +69,7 @@ class TauriUpdateServerApi extends Controller
     }
      */
     // try parsing the given manifest
-    $manifest = new TUSReleaseManifest();
+    $manifest = new ReleaseManifest();
     if (!$manifest->parse($manifestData)) {
       return $this->_respond("Could not parse manifest", 400);
     }
@@ -100,7 +98,7 @@ class TauriUpdateServerApi extends Controller
     }
 
     // create release
-    if (!$release = $manifest->createRelease($application)) {
+    if (!$manifest->createRelease($application)) {
       return $this->_respond("Could not create release", 400);
     }
 

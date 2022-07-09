@@ -10,7 +10,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\Debug;
 use SixF\TUS\Controller\TauriUpdateServerApi;
 
-class TUSUploadFile
+class UploadFile
 {
   protected string $_name;
   protected string $_type;

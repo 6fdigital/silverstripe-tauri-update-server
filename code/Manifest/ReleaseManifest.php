@@ -5,11 +5,10 @@ namespace SixF\TUS\Manifest;
 use SixF\TUS\Model\Application;
 use SixF\TUS\Model\Release;
 
-class TUSReleaseManifest
+class ReleaseManifest
 {
   protected string $_version;
   protected string $_notes;
-  protected string $_signature;
   protected string $_application;
   protected array $_artifacts;
 
@@ -48,22 +47,6 @@ class TUSReleaseManifest
   /**
    * @return string
    */
-  public function getSignature(): string
-  {
-    return $this->_signature;
-  }
-
-  /**
-   * @param string $signature
-   */
-  public function setSignature(string $signature): void
-  {
-    $this->_signature = $signature;
-  }
-
-  /**
-   * @return string
-   */
   public function getApplication(): string
   {
     return $this->_application;
@@ -94,10 +77,10 @@ class TUSReleaseManifest
   }
 
   /**
-   * @param TUSReleaseManifestArtifact $artifact
+   * @param ReleaseManifestArtifact $artifact
    * @return void
    */
-  public function addArtifact(TUSReleaseManifestArtifact $artifact): void
+  public function addArtifact(ReleaseManifestArtifact $artifact): void
   {
     $this->_artifacts[] = $artifact;
   }
@@ -106,7 +89,7 @@ class TUSReleaseManifest
    * @param string $data
    * @return $this|null
    */
-  public function parse(string $data): ?TUSReleaseManifest
+  public function parse(string $data): ?ReleaseManifest
   {
     // try parsing the raw post request data
     if (!$json = json_decode($data)) {
@@ -115,7 +98,6 @@ class TUSReleaseManifest
 
     // check if all requirements are met
     if (!property_exists($json, "version") ||
-      !property_exists($json, "signature") ||
       !property_exists($json, "application") ||
       !property_exists($json, "artifacts") ||
       count($json->artifacts) === 0) {
@@ -126,13 +108,12 @@ class TUSReleaseManifest
     // $manifest = new TUSReleaseManifest();
     $this->setVersion($json->version);
     $this->setNotes($json->notes);
-    $this->setSignature($json->signature);
     $this->setApplication($json->application);
 
     // add artifacts
     foreach ($json->artifacts as $artifactObj) {
       //
-      $artifact = new TUSReleaseManifestArtifact();
+      $artifact = new ReleaseManifestArtifact();
 
       if (!$artifact->parse($artifactObj)) {
         continue;
@@ -173,7 +154,6 @@ class TUSReleaseManifest
     $release = new Release();
     $release->Version = $this->getVersion();
     $release->Notes = $this->getNotes();
-    $release->Signature = $this->getSignature();
     $release->ApplicationID = $application->ID;
 
     //
