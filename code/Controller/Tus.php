@@ -9,7 +9,7 @@ use SilverStripe\Dev\Debug;
 use SixF\TUS\Model\Application;
 use stdClass;
 
-class TauriUpdateServer extends Controller
+class Tus extends Controller
 {
   /**
    * Get params from url and try to find the app and then

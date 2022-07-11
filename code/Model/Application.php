@@ -75,4 +75,22 @@ class Application extends DataObject
 
     return $res;
   }
+
+  /**
+   * @return void
+   */
+  public function onBeforeDelete()
+  {
+    parent::onBeforeDelete();
+
+    if ($this->Releases()->Count() <= 0 || $this->Tokens()->Count() <= 0) return;
+
+    foreach ($this->Tokens() as $artifact) {
+      $artifact->delete();
+    }
+
+    foreach ($this->Tokens() as $token) {
+      $token->delete();
+    }
+  }
 }
