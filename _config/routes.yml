@@ -6,5 +6,5 @@ After:
 ---
 SilverStripe\Control\Director:
   rules:
-    'update/$Application/$Target/$CurrentVersion': "SixF\\TUS\\Controller\\TauriUpdateServer"
-    'release//$Action': "SixF\\TUS\\Controller\\TauriUpdateServerApi"
+    'update/$Application/$Target/$CurrentVersion': "SixF\\TUS\\Controller\\Tus"
+    'release//$Action': "SixF\\TUS\\Controller\\TusApi"

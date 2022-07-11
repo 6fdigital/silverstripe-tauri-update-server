@@ -6,16 +6,32 @@ SilverStripe\Assets\File:
   allowed_extensions:
     - deb
     - rpm
+    - appimage
     - exe
+    - msi
     - dmg
 
 SilverStripe\MimeValidator\MimeUploadValidator:
   MimeTypes:
+    deb:
+      - 'application/octet-stream'
+      - 'application/x-debian-package'
+      - 'application/vnd.debian.binary-package'
     rpm:
       - 'application/octet-stream'
       - 'application\/x-rpm'
-    #exe:
-    #  - 'application/octet-stream'
+    appimage:
+      - 'application/octet-stream'
+      - 'application/x-executable'
+    exe:
+      - 'application/octet-stream'
+      - 'application/x-msdownload'
+      - 'application/msword'
+    msi:
+      - 'application/octet-stream'
+      - 'application/x-msdownload'
+      - 'application/msword'
+      - 'application/x-msi'
     dmg:
       - 'application/octet-stream'
       - 'application\/x-dmg'

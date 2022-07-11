@@ -91,6 +91,14 @@ class Artifact extends DataObject
     return $f;
   }
 
+  public function onBeforeDelete() {
+    parent::onBeforeDelete();
+
+    if ($this->File() && $this->File()->exists()) {
+      $this->File()->delete();
+    }
+  }
+
   /**
    * Return the json for the updater for updating
    * @return false|string
