@@ -12,9 +12,9 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\Debug;
 use SilverStripe\Assets\File;
 use SixF\TUS\Model\Application;
-use SixF\TUS\Manifest\ReleaseManifest;
+use SixF\TUS\Manifest\Manifest;
 
-class TauriUpdateServerApi extends Controller
+class TusApi extends Controller
 {
   private static $allowed_actions = [
     "add",
@@ -71,7 +71,7 @@ class TauriUpdateServerApi extends Controller
     }
      */
     // try parsing the given manifest
-    $manifest = new ReleaseManifest();
+    $manifest = new Manifest();
     if (!$manifest->parse($manifestData)) {
       return $this->_respond("Could not parse manifest", 400);
     }

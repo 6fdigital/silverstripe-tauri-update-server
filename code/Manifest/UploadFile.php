@@ -8,7 +8,7 @@ use SilverStripe\Assets\Upload;
 use SilverStripe\Assets\Upload_Validator;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\Debug;
-use SixF\TUS\Controller\TauriUpdateServerApi;
+use SixF\TUS\Controller\TusApi;
 
 class UploadFile
 {
@@ -114,7 +114,7 @@ class UploadFile
   public function save(): ?File
   {
     //
-    $allowedUploadExtensions = Config::inst()->get(TauriUpdateServerApi::class, "allowed_upload_extensions");
+    $allowedUploadExtensions = Config::inst()->get(TusApi::class, "allowed_upload_extensions");
     // create a custom validator to ensure
     // correct media type uploads
     $uploadValidator = new Upload_Validator();

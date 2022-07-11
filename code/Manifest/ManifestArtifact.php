@@ -10,7 +10,7 @@ use SilverStripe\Assets\Upload_Validator;
 use SilverStripe\Core\Config\Config;
 use SixF\TUS\Model\Artifact;
 
-class ReleaseManifestArtifact
+class ManifestArtifact
 {
   protected string $_os;
   protected string $_arch;
@@ -153,7 +153,7 @@ class ReleaseManifestArtifact
    * @param object $json
    * @return $this|null
    */
-  public function parse(object $json): ?ReleaseManifestArtifact
+  public function parse(object $json): ?ManifestArtifact
   {
     //
     if (!property_exists($json, "os") ||
