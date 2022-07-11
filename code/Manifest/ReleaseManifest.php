@@ -136,12 +136,17 @@ class ReleaseManifest
     // add artifacts
     foreach ($this->getArtifacts() as $artifact) {
       //
-      $uploadFile = $artifact->getUploadFile();
-
+      if (!$uploadFile = $artifact->getUploadFile()) {
+        $res = false;
+        break;
+      }
       //
       if ($file = $uploadFile->save()) {
         $artifact->setFile($file);
         $res = true;
+      } else {
+        $res = false;
+        break;
       }
     }
 

@@ -25,10 +25,12 @@ class TauriUpdateServerApi extends Controller
    * @var string[]
    */
   private static $allowed_upload_extensions = [
-    "dmg",
     "deb",
     "rpm",
-    "exe"
+    "appimage",
+    "exe",
+    "msi",
+    "dmg",
   ];
 
   public function index()
