@@ -93,9 +93,9 @@ class ReleaseManifestArtifact
   /**
    * @param File $field
    */
-  public function setFile(File $field): void
+  public function setFile(File $file): void
   {
-    $this->_file = $field;
+    $this->_file = $file;
   }
 
   /**
@@ -149,6 +149,10 @@ class ReleaseManifestArtifact
     return $file;
   }
 
+  /**
+   * @param object $json
+   * @return $this|null
+   */
   public function parse(object $json): ?ReleaseManifestArtifact
   {
     //
