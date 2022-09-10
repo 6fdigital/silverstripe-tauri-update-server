@@ -1,5 +1,7 @@
 # Silverstripe Tauri Update Server
 
+[![Software License][license-image]][license-url]
+
 A module turning silverstripe into a update server for tauri apps
 
 # Requirements
@@ -14,7 +16,7 @@ composer require 6fdigital/silverstripe-tauri-update-server
 
 ## Concepts
 
-Tauri apps coming shipped with an updater included. This requires a server responding
+Tauri apps are shipped with an updater included. This requires a server responding
 to the request of a tauri updater. The general documentation could be
 found [here](https://tauri.app/v1/guides/distribution/updater).
 
@@ -56,9 +58,9 @@ new release you need the following information:
 
 #### Release Manifest
 To release a new version of an application, you MUST create a release manifest and send
-it sent along with your request. Also, you must specify at least one artifact you want
+it along with your request. Also, you must specify at least one artifact you want
 to publish with your release. Simply these are the files the updater would upload if a 
-new release are avilable.
+new release are available.
 
 Here you can see an example release manifest:
 ```json
@@ -76,9 +78,9 @@ Here you can see an example release manifest:
    ]
 }
 ```
-For the request to function, you must create a `form-data` request and add your files
-under the field names for each artifact (field), a `MANIFEST` field serving the above
-json as well as a `TOKEN` field. The endpoint for adding new releases are available 
+For the request to function, you must create a `form-data` request, add your files
+under the field names for each artifact (field), add a `MANIFEST` field serving the above
+json and providing a `TOKEN` field. The endpoint for adding new releases are available 
 under `https://your.tld/release/add`. More information about signing your builds could
 be found in the next section **Code Signing**.
 
